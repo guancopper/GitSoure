@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using WebApiCORE.Mode;
 using WebAPICore.Struct;
 using WebApICore.Base;
+using Newtonsoft.Json.Linq;
 
 namespace WebApiCORE.Controllers
 {
@@ -17,12 +18,14 @@ namespace WebApiCORE.Controllers
         //[Route("Users")]
         public IActionResult Get()
         {
-            string[] tag_list = { "lua.fuzhuceshi" };
-            List<PointData> lists = SnapShotManager.GetSnapShot(tag_list);
+            string[] tag_list = { "demo.demo1" };
+
+            object lists = SnapShotManager.GetSnapShot(tag_list);
             //Value value = new Value();
             //value.user = "sa";
             //value.pass = "golden";
-            return Ok(lists);
+            var res = JToken.FromObject(lists).ToString();
+            return Ok(res);
         }
     }
 }
