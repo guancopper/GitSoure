@@ -16,10 +16,10 @@ namespace WebApiCORE.Controllers
     public class ValuesController : ControllerBase
     {
         //[Route("Users")]
-        public IActionResult Get()
+        public IActionResult GetSnapshot(string tagname)
         {
-            string[] tag_list = { "demo.demo1" };
-
+            //string[] tag_list = { "lua.fuzhuceshi" };
+            string[] tag_list = tagname.Split(',');
             object lists = SnapShotManager.GetSnapShot(tag_list);
             //Value value = new Value();
             //value.user = "sa";
