@@ -11,19 +11,21 @@ using WebApICore.Base;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using System.Runtime.CompilerServices;
+using WebAPICore.Method;
 
 namespace WebApiCORE.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class ValuesController : ControllerBase
     {
         //[Route("Users")]
-        [HttpGet]
+        //[HttpGet("{tagname}")]
         public IActionResult GetSnapshot(string tagname)
         {
             //string[] tag_list = { "lua.fuzhuceshi" };
-            string[] tag_list = tagname.Split(',');
+            string tagnamestr = tagname.ToString();
+            string[] tag_list = tagnamestr.Split(',');
             object lists = SnapShotManager.GetSnapShot(tag_list);
             //Value value = new Value();
             //value.user = "sa";
@@ -32,14 +34,25 @@ namespace WebApiCORE.Controllers
             return Ok(res);
         }
 
-        [HttpPost("{id}")]
-        public IActionResult PutSnapshot([FromBody] object obj)
+        //[HttpPost("{id}")]
+        public IActionResult PutSnapshot(object obj)
         {
-            //var str = "hello";
-            var DynamicObject = JsonConvert.SerializeObject(obj);
-            //string[] tag_list = tagname.Split(',');
-            //object lists = SnapShotManager.GetSnapShot(tag_list);
-            return Ok(DynamicObject);
+            var jsonstr = JsonConvert.SerializeObject(obj);
+            var DynamicObject = JsonConvert.DeserializeObject<dynamic>(jsonstr);
+            //string str = DynamicObject.TagName;
+            List<PointData> points = new List<PointData>();
+            foreach (var point in DynamicObject)
+            {
+                points.Add(new PointData()
+                {
+                    TagName = point.TagName,
+                    Time = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
+                    Value = point.Value,
+                    Quality = point.Quality,
+                });
+            }
+            var er = Snapshot.PutSnapshot(points);
+            return Ok(er);
         }
     }
 }
