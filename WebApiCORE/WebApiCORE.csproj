@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Nullable>enable</Nullable>
+    <UserSecretsId>e45b2e39-652f-4b70-bba3-88bcb1a2f8d5</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,6 +17,7 @@
 
   <ItemGroup>
     <Folder Include="Method\" />
+    <Folder Include="Dll\" />
   </ItemGroup>
 
 
