@@ -2,7 +2,7 @@
   "GoldenUsername": "sa",
   "GoldenPassword": "golden",
   "GoldenPort": "6327",
-  "GoldenHost": "192.168.152.146",
+  "GoldenHost": "192.168.152.148",
   "PoolSize": 6,
   "TimeOutSetZeroTime": 0
 }

@@ -133,5 +133,31 @@ namespace WebApICore.Base
             //Log.Info("标签点缓存池开启成功");
             Console.WriteLine("标签点缓存池开启成功");
         }
+        /// <summary>
+        /// 根据点名获取点
+        /// </summary>
+        /// <param name="tags"></param>
+        /// <returns></returns>
+        public static Dictionary<string, PointInfo> GetPointInfosByTagNames(string[] tags)
+        {
+            Dictionary<string, PointInfo> points = new Dictionary<string, PointInfo>();
+            foreach (var tag in tags)
+            {
+                if (PointNameDictionary.ContainsKey(tag.ToLower()))
+                {
+                    var id = PointNameDictionary[tag.ToLower()];
+                    if (PointDictionary.ContainsKey(id))
+                    {
+                        var point = PointDictionary[id];
+                        points.Add(tag, new PointInfo()
+                        {
+                            ID = point.ID,
+                            Type = point.DataType
+                        });
+                    }
+                }
+            }
+            return points;
+        }
     }
 }
